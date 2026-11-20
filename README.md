@@ -38,7 +38,7 @@ Clone the repository:
 
 ``` bash
 git clone https://github.com/muhmardini/Ruvexara
-cd <repository-directory>
+cd Ruvexara
 ```
 
 Alternatively, download `Ruvexara.py` directly.
