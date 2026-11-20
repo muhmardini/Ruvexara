@@ -196,7 +196,7 @@ def scan_text(text, where):
             value = m.groupdict().get("v") or m.group(0)
             if looks_fake(value):
                 continue
-            add(severity, "Secret in JS", label, where, mask(value))
+            add(severity, "Secret in JS", label, where, value)s
 
 
 def find_endpoints(text):
