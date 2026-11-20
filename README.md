@@ -37,7 +37,7 @@ python -m pip install requests
 Clone the repository:
 
 ``` bash
-git clone <repository-url>
+git clone https://github.com/muhmardini/Ruvexara
 cd <repository-directory>
 ```
 
@@ -154,4 +154,5 @@ methods implemented in the current version.
 
 ## License
 
-Add the project's license here before publishing.
+This project is licensed under the MIT License.
+See the [LICENSE](LICENSE) file for details.
