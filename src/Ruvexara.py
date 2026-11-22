@@ -33,6 +33,7 @@ from html import escape
 from urllib.parse import urljoin, urlparse
 
 import requests
+from report_template_loader import write_html_report
 
 # ---------------------------------------------------------------- settings
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
@@ -352,35 +353,6 @@ def check_admin_routes(base, js_endpoints, baseline):
 
 
 # ---------------------------------------------------------------- reports
-COLORS = {"HIGH": "#c62828", "MEDIUM": "#e65100", "LOW": "#9e7b00", "INFO": "#1565c0"}
-
-HTML_TEMPLATE = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<title>Ruvexara report</title>
-<style>
-body{font-family:system-ui,sans-serif;margin:2rem;color:#222;background:#fafafa}
-h1{margin-bottom:.2rem}
-.meta{color:#666;margin-bottom:1.5rem}
-.cards{display:flex;gap:1rem;margin-bottom:1.5rem}
-.card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:.8rem 1.4rem;text-align:center}
-.card b{display:block;font-size:1.8rem}
-table{border-collapse:collapse;width:100%;background:#fff}
-th,td{border:1px solid #ddd;padding:.5rem .7rem;text-align:left;vertical-align:top}
-th{background:#f0f0f0}
-.badge{color:#fff;border-radius:4px;padding:.1rem .5rem;font-size:.8rem;font-weight:600}
-.mono{font-family:ui-monospace,monospace;font-size:.85rem;word-break:break-all}
-</style></head><body>
-<h1>Ruvexara report</h1>
-<div class="meta">Target: %%TARGET%% &middot; Scanned: %%TIME%% &middot; %%AUTH%%</div>
-<div class="cards">%%CARDS%%</div>
-<table>
-<tr><th>Severity</th><th>Category</th><th>Finding</th><th>Where</th><th>Detail</th></tr>
-%%ROWS%%
-</table>
-<p class="meta">Secrets are masked, but treat this report as sensitive.</p>
-</body></html>"""
-
-
 def sorted_findings():
     return sorted(FINDINGS, key=lambda f: SEVERITY_ORDER[f["severity"]])
 
@@ -409,24 +381,14 @@ def write_json(path, target):
     print(f"[+] JSON report saved to {path}")
 
 
-def write_html(path, target):
-    cards = "".join(
-        f"<div class='card'><b style='color:{COLORS[s]}'>{n}</b>{s}</div>" for s, n in counts().items())
-    rows = "".join(
-        f"<tr><td><span class='badge' style='background:{COLORS[f['severity']]}'>{f['severity']}</span></td>"
-        f"<td>{escape(f['category'])}</td><td>{escape(f['title'])}</td>"
-        f"<td class='mono'>{escape(f['where'])}</td><td class='mono'>{escape(f['detail'])}</td></tr>\n"
-        for f in sorted_findings())
-    page = (HTML_TEMPLATE
-            .replace("%%TARGET%%", escape(target))
-            .replace("%%TIME%%", datetime.now().strftime("%Y-%m-%d %H:%M"))
-            .replace("%%AUTH%%", "authenticated scan" if AUTH_HEADERS else "anonymous scan")
-            .replace("%%CARDS%%", cards)
-            .replace("%%ROWS%%", rows))
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(page)
-    print(f"[+] HTML report saved to {path}")
-
+def write_html(path, target, scan_options=None):
+    write_html_report(
+        output_path=path,
+        target=target,
+        findings=FINDINGS,
+        authenticated=bool(AUTH_HEADERS),
+        scan_options=scan_options,
+    )
 
 # ---------------------------------------------------------------- main
 def main():
@@ -482,7 +444,15 @@ def main():
     if args.json:
         write_json(args.json, base)
     if args.html:
-        write_html(args.html, base)
+        write_html(
+            args.html,
+            base,
+            scan_options={
+                "delay": DELAY,
+                "depth": args.depth,
+                "external": args.external,
+            },
+        )
 
 
 if __name__ == "__main__":
