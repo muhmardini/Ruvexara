@@ -12,7 +12,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoes
 
 
 # This file and the 'template' directory should be in the same project folder.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 TEMPLATE_DIR = BASE_DIR / "templates"
 TEMPLATE_NAME = "work-template.html"
 

@@ -1,0 +1,10 @@
+ruvexara/__init__.py,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+ruvexara/report_template_loader.py,sha256=fo9e1_DzuFVAUYQmpInP1cF38OG4HcZsIdIARlx6NMU,10934
+ruvexara/ruvexara.py,sha256=yae-lRpPfh4SBXnoKA5YitqDiPRUGNvSkcb6DZIv9t0,19396
+ruvexara/templates/work-template.html,sha256=CgvXxN8YkiASJDlywMF0muZOJgSn_h6UyzQ-k-4cWFQ,41350
+ruvexara-1.2.0.dist-info/licenses/LICENSE,sha256=A9V3kDDLYHDJo66l9syzh6Upk_fKgCoIGvtrJWAOgko,1088
+ruvexara-1.2.0.dist-info/METADATA,sha256=IA1FMiv6qcmdUesFFeDmmdBbeiuqrdUFZAmmtfoevp0,5540
+ruvexara-1.2.0.dist-info/WHEEL,sha256=mOdXR9C3wMVov7cSY8PY-XCzo3SmmWCHvGQr5csJoao,91
+ruvexara-1.2.0.dist-info/entry_points.txt,sha256=gJq2YFjt5yR3nHc643sNHmFdM_SNg0RMLWkf1EGCL1M,52
+ruvexara-1.2.0.dist-info/top_level.txt,sha256=XOVGDgeoj560nDJ1v_8TkZsemQ1cHUijGWgk02PL3dc,9
+ruvexara-1.2.0.dist-info/RECORD,,

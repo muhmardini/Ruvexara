@@ -33,7 +33,7 @@ from html import escape
 from urllib.parse import urljoin, urlparse
 
 import requests
-from report_template_loader import write_html_report
+from .report_template_loader import write_html_report
 
 # ---------------------------------------------------------------- settings
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
